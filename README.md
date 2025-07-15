@@ -1,4 +1,4 @@
-# Criar Usuário
+# Usuário
 
 ## `POST /user/create`
 
@@ -28,5 +28,22 @@ Ao criar a conta o user irá receber 7 dias grátis.
     "fontTwoSize": 20,
     "fontTwoSpacing": 2
   }
+}
+```
+
+## `POST /user/auth`
+
+Este endpoint permite autenticar uma conta com as credenciais fornecidas e retorna um token JWT caso a autenticação seja bem-sucedida.
+
+### Corpo da Requisição (Request Body)
+
+O corpo da requisição deve ser um objeto JSON contendo as informações email e senha.
+
+**Exemplo:**
+
+```json
+{
+  "email": "harisonc081@gmail.com",
+  "password": "12345678"
 }
 ```
