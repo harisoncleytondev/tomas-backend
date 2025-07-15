@@ -13,7 +13,10 @@
   "dependencies": {
     "@sequelize/postgres": "^7.0.0-alpha.46",
     "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.0.1",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "json-web-token": "^3.2.0",
+    "jsonwebtoken": "^9.0.2"
   }
 }

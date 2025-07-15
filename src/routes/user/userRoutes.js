@@ -1,20 +1,16 @@
 import express from 'express';
-import { createUser } from '../../controllers/userController.js';
+import { authUser, createUser } from '../../controllers/userController.js';
 
 const router = express.Router();
 
-router.post('/create', async (req, res) => {
-    if (req.body == null) {
-        res.status(400).json( {message: "Não foi encontrado informações para criar o usuario."} );
-        return;
-    }
+/* Criar usuario */
+router.post('/create', (req, res) => {
+  createUser(req, res);
+});
 
-    try {
-        const response = await createUser(req.body);
-        res.status(response.status).json(response.message);
-    } catch (error) {
-        res.status(500);
-    }
-})
+/* Logar usuario */
+router.post('/auth', (req, res) => {
+  authUser(req, res);
+});
 
 export default router;

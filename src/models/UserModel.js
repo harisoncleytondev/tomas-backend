@@ -29,6 +29,11 @@ const User = sequelize.define('User', {
     type: DataTypes.BIGINT,
     allowNull: true
   },
+  admin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
   preferences: {
     type: DataTypes.JSONB,
     allowNull: true
