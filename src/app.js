@@ -1,16 +1,19 @@
 import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
 dotenv.config();
 
-import router from './src/routes/routes.js';
-import { start } from './src/config/database.js';
+import router from './routes/routes.js';
+import { start } from './config/database.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cookieParser())
+app.use(cors({
+    origin: process.env.URL_FRONTEND,// permite apenas o dominio do frontend
+    methods: ['POST'],
+}));
 app.use('/', router);
 start();
 

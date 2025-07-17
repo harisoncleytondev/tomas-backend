@@ -8,6 +8,7 @@ dotenv.config();
 export const createUser = async (req, res) => {
   if (req.body == null) {
     return res.status(400).json({
+      status: 400,
       message: 'Não foi encontrado informações para criar o usuario.',
     });
   }
@@ -35,7 +36,7 @@ export const createUser = async (req, res) => {
       .status(201)
       .json({ status: 201, message: 'Conta criada com sucesso.' });
   } catch (error) {
-    res.status(500).json({ status: 500 });
+    res.status(500).json({ status: 500, error: error});
   }
 };
 
@@ -50,8 +51,8 @@ export const authUser = async (req, res) => {
   try {
     if ((await User.findOne({ where: { email: req.body.email } })) == null) {
       return res.status(404).json({
-        status: 404,
-        message: 'Conta não encontrada no banco de dados.',
+        status: 401,
+        message: 'Conta não autorizada.',
       });
     }
 
@@ -65,6 +66,7 @@ export const authUser = async (req, res) => {
 
     const jwtCode = jwt.sign(
       {
+        email: user.email,
         username: user.username,
         admin: user.admin,
         preferences: user.preferences,
@@ -78,6 +80,6 @@ export const authUser = async (req, res) => {
       token: jwtCode,
     });
   } catch (error) {
-    res.status(500).json({ status: 500 });
+    res.status(500).json({ status: 500, error: error});
   }
 };
