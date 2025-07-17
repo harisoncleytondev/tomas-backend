@@ -80,7 +80,7 @@ O corpo da requisição deve ser um objeto JSON contendo o content da mensagem e
 ```json
 {
   "content": "Olá joão que bom que essa é sua primeira mensagem. Como posso ajudar?",
-  "isBot": true //A mensagem é de um BOT.
+  "isBot": true
 }
 ```
 ## `GET /chat/:chatId`
