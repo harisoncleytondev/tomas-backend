@@ -48,7 +48,7 @@ O corpo da requisição deve ser um objeto JSON contendo as informações email 
 }
 ```
 
-## `GET /:userEmail`
+## `GET user/:userEmail`
 
 Este endpoint verifica se um e-mail está cadastrado. Retorna 200 OK se o e-mail existe, ou 404 Not Found caso não exista.
 
