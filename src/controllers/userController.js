@@ -36,7 +36,7 @@ export const createUser = async (req, res) => {
       .status(201)
       .json({ status: 201, message: 'Conta criada com sucesso.' });
   } catch (error) {
-    res.status(500).json({ status: 500, error: error});
+    res.status(500).json({ status: 500, error: error });
   }
 };
 
@@ -80,6 +80,21 @@ export const authUser = async (req, res) => {
       token: jwtCode,
     });
   } catch (error) {
-    res.status(500).json({ status: 500, error: error});
+    res.status(500).json({ status: 500, error: error });
+  }
+};
+
+/* Busca usuario por email */
+export const findUserByEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({ where: { email: req.params.userEmail } });
+
+    if (!user) {
+      return res.sendStatus(404);
+    }
+
+    return res.sendStatus(200);
+  } catch {
+    return res.sendStatus(500);
   }
 };

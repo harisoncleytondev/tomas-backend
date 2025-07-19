@@ -1,5 +1,5 @@
 import express from 'express';
-import { authUser, createUser } from '../../controllers/userController.js';
+import { authUser, createUser, findUserByEmail } from '../../controllers/userController.js';
 
 const router = express.Router();
 
@@ -12,5 +12,10 @@ router.post('/create', async (req, res) => {
 router.post('/auth', async (req, res) => {
   await authUser(req, res);
 });
+
+/* Verifica se usuario existe */
+router.get('/:userEmail', async (req, res) => {
+  await findUserByEmail(req, res);
+})
 
 export default router;
