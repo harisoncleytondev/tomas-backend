@@ -36,7 +36,7 @@ export const createChat = async (req, res) => {
 
     return res
       .status(201)
-      .json({ status: 201, message: 'Chat criado com sucesso.' });
+      .json({ status: 201, message: 'Chat criado com sucesso.', chat_id: chat.chat_id });
   } catch (error) {
     return res.status(500).json({ status: 500, message: error });
   }
