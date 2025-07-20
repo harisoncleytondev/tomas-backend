@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 // rate limit
 const apiLimiter = rateLimit({
   windowMs: 60 * 1000, 
-  max: 60, 
+  max: 80, 
   message: 'Você está enviando requisições muito rápido. Tente novamente em 1 minuto.',
   standardHeaders: true,
   legacyHeaders: false,
