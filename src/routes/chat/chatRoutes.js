@@ -6,7 +6,7 @@ import { checkUserAcessDayMiddleware } from '../../middlewares/checkUserAccessDa
 const router = express.Router();
 
 /* Cria um chat */
-router.post('/create', checkAuthUserMiddleware, checkUserChatOwnershipMiddleware, async (req, res) => {
+router.post('/create', checkAuthUserMiddleware, checkUserAcessDayMiddleware, async (req, res) => {
   await createChat(req, res);
 });
 
@@ -16,7 +16,7 @@ router.delete('/delete/:chatId', checkAuthUserMiddleware, checkUserChatOwnership
 })
 
 /* Pegar todos os chats */
-router.get('/', checkAuthUserMiddleware, checkUserAcessDayMiddleware, checkUserChatOwnershipMiddleware, async (req, res) => {
+router.get('/', checkAuthUserMiddleware, checkUserAcessDayMiddleware, async (req, res) => {
   await findAllChats(req, res);
 });
 
