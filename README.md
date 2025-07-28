@@ -16,6 +16,20 @@ Ao criar a conta o user irá receber 7 dias grátis.
   "email": "harisonc081@gmail.com",
   "password": "12345678",
   "username": "harison",
+}
+```
+
+## `PUT /user/edit/preferences`
+
+Este endpoint é utilizado para editar as preferências do sistema.
+
+### Corpo da Requisição (Request Body)
+
+O corpo da requisição deve ser um objeto JSON contendo as informações de preferência.
+
+**Exemplo:**
+
+```json
   "preferences": {
     "backgroundColor": "#fff",
     "textColor": "#fff",
@@ -28,7 +42,6 @@ Ao criar a conta o user irá receber 7 dias grátis.
     "fontTwoSize": 20,
     "fontTwoSpacing": 2
   }
-}
 ```
 
 ## `POST /user/auth`
@@ -47,6 +60,14 @@ O corpo da requisição deve ser um objeto JSON contendo as informações email 
   "password": "12345678"
 }
 ```
+
+## `GET /auth/google`
+
+Rota de autenticação com o GOOGLE
+
+### Corpo da Requisição (Request Body)
+
+Nenhum corpo de requisição é necessário para este endpoint.
 
 ## `GET user/:userEmail`
 
