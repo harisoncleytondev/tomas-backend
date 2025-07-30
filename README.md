@@ -92,6 +92,7 @@ O corpo da requisição deve ser um objeto JSON contendo o content da mensagem.
 
 ```json
 {
+  "title": "Meu primeiro chat",
   "content": "Olá tomas. Essa é minha primeira mensagem!"
 }
 ```

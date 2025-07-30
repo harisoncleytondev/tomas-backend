@@ -30,10 +30,10 @@ export const createUser = async (req, res) => {
     delete json.password;
     json.subscription_expires_at = Date.now() + 7 * 24 * 60 * 60 * 1000; //7 dias gratis
     json.preferences = {
-      backgroundColor: '#F9F9F9',
+      backgroundColor: '#000B3E',
       textColor: '#fff',
-      buttonColor: '#425989ff',
-      extraColor: '#2463EB',
+      buttonColor: '#374680',
+      extraColor: '#374680',
       fontOne: `'Baloo 2', sans-serif`,
       fontOneSize: 45,
       fontOneSpacing: 0.8,

@@ -14,11 +14,7 @@ export const createChat = async (req, res) => {
 
   const token = req.headers.authorization.replace('Bearer ', '');
   const { email } = decode(token);
-  const { content } = req.body;
-
-  const words = content.trim().split(/\s+/);
-  const title =
-    words.length <= 30 ? content.trim() : words.slice(0, 30).join(' ') + '...';
+  const { title, content } = req.body;
 
   try {
     const chat = Chat.build({
@@ -62,19 +58,28 @@ export const deleteChatById = async (req, res) => {
 
 /* Buscar chat pelo ID */
 export const findChatById = async (req, res) => {
-  const chat = await Chat.findOne({ where: { chat_id: req.params.chatId } });
-  const messages = await Messages.findAll({ where: { chat_id: chat.chat_id } });
-
-  res.status(200).json({
-    chat: chat,
-    messages: messages,
-  });
-
   try {
+    const chat = await Chat.findOne({ where: { chat_id: req.params.chatId } });
+    if (!chat) {
+      return res.status(404).json({ status: 404, message: 'Chat não encontrado' });
+    }
+
+    const messages = await Messages.findAll({
+      where: { chat_id: chat.chat_id },
+      order: [['created_at', 'ASC']],
+    });
+
+    console.log(messages);
+
+    return res.status(200).json({
+      chat,
+      messages,
+    });
   } catch (error) {
-    return res.status(500).json({ status: 500, message: error });
+    return res.status(500).json({ status: 500, message: error.message || error });
   }
 };
+
 
 /* Buscar todos os chats associados a uma conta */
 export const findAllChats = async (req, res) => {
