@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 const { verify } = jwt;
 import dotenv from 'dotenv';
-import User from '../models/userModel';
+import User from '../models/userModel.js';
 dotenv.config();
 
 export const checkAuthUserMiddleware = async (req, res, next) => {
