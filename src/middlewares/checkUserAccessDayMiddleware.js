@@ -3,7 +3,8 @@ const { decode } = jwt;
 import User from '../models/userModel.js';
 
 export const checkUserAcessDayMiddleware = async (req, res, next) => {
-  const token = req.headers.authorization.replace('Bearer ', '');
+  next();
+  /*const token = req.headers.authorization.replace('Bearer ', '');
   const { email } = decode(token);
 
   const { subscription_expires_at } = await User.findOne({
@@ -16,5 +17,5 @@ export const checkUserAcessDayMiddleware = async (req, res, next) => {
       message: 'Plano expirado',
     });
   }
-  next();
+  next();*/
 };

@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
 const { verify } = jwt;
 import dotenv from 'dotenv';
+import User from '../models/userModel';
 dotenv.config();
 
-export const checkAuthUserMiddleware = (req, res, next) => {
+export const checkAuthUserMiddleware = async (req, res, next) => {
   if (req.headers.authorization == null) {
     return res
       .status(404)
@@ -12,7 +13,21 @@ export const checkAuthUserMiddleware = (req, res, next) => {
   const token = req.headers.authorization.replace('Bearer ', '');
 
   try {
-    verify(token, process.env.JWT_SECRET);
+    const { email } = verify(token, process.env.JWT_SECRET);
+    if (email == null) {
+      return res
+        .status(401)
+        .json({ status: 401, message: 'Conta não autorizada.' });
+    }
+
+    const user = await User.findOne({ where: { email: email } });
+
+    if (user == null) {
+      return res
+        .status(401)
+        .json({ status: 401, message: 'Conta não autorizada.' });
+    }
+
     next();
   } catch (error) {
     return res

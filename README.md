@@ -77,6 +77,14 @@ Este endpoint verifica se um e-mail está cadastrado. Retorna 200 OK se o e-mail
 
 Nenhum corpo de requisição é necessário para este endpoint.
 
+## `GET /auth/verify`
+
+Rota para verificar se o token é valido. Enviar token pela header.
+
+### Corpo da Requisição (Request Body)
+
+Nenhum corpo de requisição é necessário para este endpoint.
+
 # Chats e Mensagens
 #### `Nota: Todos os endpoints a seguir requerem um token de autenticação no header Authorization com o formato` ``Bearer <token>``
 

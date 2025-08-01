@@ -1,5 +1,10 @@
 import express from 'express';
-import { authUser, createUser, findUserByEmail, userEditPreferences } from '../../controllers/userController.js';
+import {
+  authUser,
+  createUser,
+  findUserByEmail,
+  userEditPreferences,
+} from '../../controllers/userController.js';
 import { checkAuthUserMiddleware } from '../../middlewares/checkAuthUserMiddleware.js';
 
 const router = express.Router();
@@ -21,6 +26,10 @@ router.get('/:userEmail', async (req, res) => {
 
 router.put('/edit/preferences', checkAuthUserMiddleware, async (req, res) => {
   await userEditPreferences(req, res);
+});
+
+router.get('/auth/verify', checkAuthUserMiddleware, (_req, res) => {
+  return res.status(200).json({ valid: true });
 });
 
 export default router;
