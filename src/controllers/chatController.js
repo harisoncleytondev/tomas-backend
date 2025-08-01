@@ -69,8 +69,6 @@ export const findChatById = async (req, res) => {
       order: [['created_at', 'ASC']],
     });
 
-    console.log(messages);
-
     return res.status(200).json({
       chat,
       messages,

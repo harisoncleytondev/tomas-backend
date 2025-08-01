@@ -33,7 +33,7 @@ export const createUser = async (req, res) => {
       backgroundColor: '#000B3E',
       textColor: '#fff',
       buttonColor: '#374680',
-      extraColor: '#374680',
+      extraColor: '#142671',
       fontOne: `'Baloo 2', sans-serif`,
       fontOneSize: 45,
       fontOneSpacing: 0.8,
