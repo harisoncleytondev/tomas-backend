@@ -15,7 +15,7 @@ Ao criar a conta o user irá receber 7 dias grátis.
 {
   "email": "harisonc081@gmail.com",
   "password": "12345678",
-  "username": "harison",
+  "username": "harison"
 }
 ```
 
@@ -86,7 +86,8 @@ Rota para verificar se o token é valido. Enviar token pela header.
 Nenhum corpo de requisição é necessário para este endpoint.
 
 # Chats e Mensagens
-#### `Nota: Todos os endpoints a seguir requerem um token de autenticação no header Authorization com o formato` ``Bearer <token>``
+
+#### `Nota: Todos os endpoints a seguir requerem um token de autenticação no header Authorization com o formato` `Bearer <token>`
 
 ## `POST /chat/create`
 
@@ -121,6 +122,7 @@ O corpo da requisição deve ser um objeto JSON contendo o content da mensagem e
   "isBot": true
 }
 ```
+
 ## `GET /chat/:chatId`
 
 Este endpoint retorna informações do chat e suas mensagens para o chat especificado por **chatId**.
@@ -144,3 +146,31 @@ Este endpoint deleta um chat e suas mensagens pelo chat especificado por **chatI
 ### Corpo da Requisição (Request Body)
 
 Nenhum corpo de requisição é necessário para este endpoint.
+
+## `POST /ia/ask`
+
+Este endpoint retorna uma mensagem da IA.
+
+### Corpo da Requisição (Request Body)
+
+O corpo da requisição deve conter informaçõe sobre a temperature, o prompt e a menssagem que ele deve receber. Pode haver também um array history que "mensagens" que ele deve se lembrar. (History não é obrigatorio.)
+
+**Exemplo:**
+
+```json
+{
+  "systemPrompt": "Você é um assistente útil e preciso.",
+  "question": "Qual a capital da França?",
+  "temperature": 0.7,
+  "history": [
+    {
+      "is_bot": false,
+      "message_content": "Oi, quem é você?"
+    },
+    {
+      "is_bot": true,
+      "message_content": "Sou um assistente de IA pronto para te ajudar."
+    }
+  ]
+}
+```
