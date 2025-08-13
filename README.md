@@ -95,3 +95,17 @@ Aqui estão os links importantes para a documentação, protótipo e ambiente de
 
 ---
 © 2025 Tomas — Projeto Integrador Senac Paulista (PE)
+
+#### Colaboradores: 
+
+<p>
+  <a href="https://github.com/harisoncleytondev" target="_blank">
+    <img src="https://avatars.githubusercontent.com/u/207046169?v=4&s=50" alt="Harison Cleyton" style="width:50px; height:50px; border-radius:50%; margin-right:10px;" />
+  </a>
+  <a href="https://github.com/williamdev20" target="_blank">
+    <img src="https://avatars.githubusercontent.com/u/203742942?v=4&s=50" alt="William Alves" style="width:50px; height:50px; border-radius:50%; margin-right:10px;" />
+  </a>
+  <a href="https://github.com/David00e" target="_blank">
+    <img src="https://avatars.githubusercontent.com/u/208716430?v=4&s=50" alt="David" style="width:50px; height:50px; border-radius:50%;" />
+  </a>
+</p>
