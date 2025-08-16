@@ -1,10 +1,39 @@
 import { Router } from 'express';
+import fs from 'fs';
 import { checkAuthUserMiddleware } from '../../middlewares/checkAuthUserMiddleware.js';
 import { checkUserAcessDayMiddleware } from '../../middlewares/checkUserAccessDayMiddleware.js';
 import dotenv from 'dotenv';
+import path from 'path';
+import csv from 'csv-parser';
 dotenv.config();
 
 const router = Router();
+let rag_data = [];
+
+export const loadRAG = (url) => {
+  fs.readdir(url, (err, files) => {
+    if (err) {
+      console.log('Erro ao carregar RAG');
+      return;
+    }
+
+    console.log('RAG antes:', rag_data);
+
+    files.forEach((file) => {
+      const results = [];
+      fs.createReadStream(path.join(url, file))
+        .pipe(csv())
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+          rag_data.push(...results); // acumula tudo no rag_data
+          console.log(`[RAG] ${file} -> ${results.length} registros`);
+        })
+        .on('error', (err) => {
+          console.log('Erro ao processar:', err);
+        });
+    });
+  });
+};
 
 function transformMessages(history) {
   if (history == null) return [];
@@ -13,6 +42,13 @@ function transformMessages(history) {
     content: msg.message_content,
   }));
 }
+
+const contextMessage = `
+Você é um RAG amigável e empático, especializado em ajudar pessoas neurodivergentes.
+Responda de forma direta, simples, acessível e **sempre resumida**, usando a mesma língua da pergunta.
+Aqui está o contexto confiável que você pode usar:
+${rag_data}
+`;
 
 router.post(
   '/ask',
@@ -34,7 +70,7 @@ router.post(
           body: JSON.stringify({
             model,
             messages: [
-              { role: 'system', content: systemPrompt },
+              { role: 'system', content: `${contextMessage}\n${systemPrompt}` },
               ...transformMessages(history),
               { role: 'user', content: question },
             ],
