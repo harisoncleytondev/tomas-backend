@@ -79,7 +79,7 @@ Para construir o Tomas, utilizamos um conjunto de tecnologias modernas e eficien
   <img src="https://lh3.googleusercontent.com/pw/AP1GczOC0JrjnMnhivXQpYWsaIb3DiG1z9S0XFu9EKeOKc6D7stqm32BxIW7d1VtcFjnuMAVF2udq23XvnuiQZ2jdNqZTyNfBmU5YpWtIAkFieYoqc9YFd-jVtfeyWhHXAl-RjpOu2SD3Kg9ehISOr2s4P8=w907-h680-s-no-gm?authuser=0" width="300" height="300" />
   <p style="max-width: 600px; margin: 10px auto; text-align: center;">
     <strong>Izaias</strong><br>
-    Responsável pela modelagem do banco de dados da aplicação, definindo a estrutura das tabelas, relacionamentos e integridade dos dados.
+    Responsável pelos requesitos funcionais e não funcionais do sistema.
   </p>
 </div>
 ---
