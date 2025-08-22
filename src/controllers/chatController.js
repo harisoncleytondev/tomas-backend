@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import Chat from '../models/chatModel.js';
 import Messages from '../models/messagesModel.js';
+import User from '../models/userModel.js';
+import { insertLog } from '../services/logService.js';
 const { decode } = jwt;
 
 /* Criar chat e mensagem inicial */
@@ -29,10 +31,14 @@ export const createChat = async (req, res) => {
       chat_id: chat.chat_id,
     });
     await message.save();
+    const user = await User.findOne({ where: { email: email } });
+    await insertLog(user.user_id, `create_chat(ID: ${chat.chat_id})`, req);
 
-    return res
-      .status(201)
-      .json({ status: 201, message: 'Chat criado com sucesso.', chat_id: chat.chat_id });
+    return res.status(201).json({
+      status: 201,
+      message: 'Chat criado com sucesso.',
+      chat_id: chat.chat_id,
+    });
   } catch (error) {
     return res.status(500).json({ status: 500, message: error });
   }
@@ -40,17 +46,23 @@ export const createChat = async (req, res) => {
 
 /* Deleta um chat e suas mensagens pelo ID */
 export const deleteChatById = async (req, res) => {
+  const token = req.headers.authorization.replace('Bearer ', '');
+  const { email } = decode(token);
+
   try {
     await Messages.destroy({
       where: { chat_id: req.params.chatId },
     });
     await Chat.destroy({
-      where: { chat_id: req.params.chatId}
-    })
+      where: { chat_id: req.params.chatId },
+    });
+    const user = await User.findOne({ where: { email: email } });
+    await insertLog(user.user_id, `delete_chat(ID: ${req.params.chatId})`, req);
 
-    return res
-      .status(200)
-      .json({ status: 200, message: 'Chats e mensagens deletados com sucesso.' });
+    return res.status(200).json({
+      status: 200,
+      message: 'Chats e mensagens deletados com sucesso.',
+    });
   } catch (error) {
     return res.status(500).json({ status: 500, message: error });
   }
@@ -61,7 +73,9 @@ export const findChatById = async (req, res) => {
   try {
     const chat = await Chat.findOne({ where: { chat_id: req.params.chatId } });
     if (!chat) {
-      return res.status(404).json({ status: 404, message: 'Chat não encontrado' });
+      return res
+        .status(404)
+        .json({ status: 404, message: 'Chat não encontrado' });
     }
 
     const messages = await Messages.findAll({
@@ -74,10 +88,11 @@ export const findChatById = async (req, res) => {
       messages,
     });
   } catch (error) {
-    return res.status(500).json({ status: 500, message: error.message || error });
+    return res
+      .status(500)
+      .json({ status: 500, message: error.message || error });
   }
 };
-
 
 /* Buscar todos os chats associados a uma conta */
 export const findAllChats = async (req, res) => {

@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { insertLog } from '../services/logService.js';
 dotenv.config();
 const { decode } = jwt;
 
@@ -42,8 +43,8 @@ export const createUser = async (req, res) => {
       fontTwoSpacing: 0.8,
     };
 
-    const userToCreate = User.build(json);
-    await userToCreate.save();
+    const userToCreate = await User.create(json);
+    await insertLog(userToCreate.user_id, 'register', req);
 
     const jwtCode = jwt.sign(
       {
@@ -58,7 +59,11 @@ export const createUser = async (req, res) => {
 
     return res
       .status(201)
-      .json({ status: 201, message: 'Conta criada com sucesso.', token: jwtCode });
+      .json({
+        status: 201,
+        message: 'Conta criada com sucesso.',
+        token: jwtCode,
+      });
   } catch (error) {
     res.status(500).json({ status: 500, error: error });
   }
@@ -98,6 +103,7 @@ export const authUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
+    await insertLog(user.user_id, 'login', req);
     return res.status(200).json({
       status: 200,
       message: 'Conta autorizada com sucesso.',
@@ -154,7 +160,11 @@ export const userEditPreferences = async (req, res) => {
 
     return res
       .status(200)
-      .json({ status: 200, message: 'Preferências atualizadas com sucesso.', token: jwtCode });
+      .json({
+        status: 200,
+        message: 'Preferências atualizadas com sucesso.',
+        token: jwtCode,
+      });
   } catch (error) {
     return res.sendStatus(500);
   }

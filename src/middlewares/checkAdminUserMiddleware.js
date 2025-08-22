@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 const { decode } = jwt;
-import User from '../models/userModel';
+import User from '../models/userModel.js';
 
 export const checkAdminUserMiddleware = async (req, res, next) => {
   const token = req.headers.authorization.replace('Bearer ', '');

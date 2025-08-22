@@ -6,6 +6,8 @@ import {
   userEditPreferences,
 } from '../../controllers/userController.js';
 import { checkAuthUserMiddleware } from '../../middlewares/checkAuthUserMiddleware.js';
+import { checkAdminUserMiddleware } from '../../middlewares/checkAdminUserMiddleware.js';
+import Log from '../../models/logModel.js';
 
 const router = express.Router();
 
@@ -31,5 +33,9 @@ router.put('/edit/preferences', checkAuthUserMiddleware, async (req, res) => {
 router.get('/auth/verify', checkAuthUserMiddleware, (_req, res) => {
   return res.status(200).json({ valid: true });
 });
+
+router.get('/log/:userId', checkAdminUserMiddleware, async (req, res) => {
+  console.log(await Log.findAll({ where: { user_id: req.params.userId} }))
+})
 
 export default router;
