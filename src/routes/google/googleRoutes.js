@@ -3,6 +3,9 @@ import passport from 'passport';
 const router = Router();
 import dotenv from 'dotenv';
 dotenv.config();
+import { insertLog } from '../../services/logService.js';
+import User from '../../models/userModel.js';
+import { decode } from 'jsonwebtoken';
 
 // select_account faz sempre pedir pra logar independente do navegador tiver uma conta salva
 router.get(
@@ -19,9 +22,18 @@ router.get(
     session: false,
     failureRedirect: '/login', // enviar pro front
   }),
-  (req, res) => {
+  async (req, res) => {
     const token = req.user;
-    res.redirect(process.env.URL_FRONT_LOGIN.replace('action', token.register === true ? 'register' : 'login').replace('token', token.token))
+    const { email } = decode(token);
+    const user = User.findOne({ where: { email: email } });
+
+    await insertLog(user.user_id, 'login_google', req);
+    res.redirect(
+      process.env.URL_FRONT_LOGIN.replace(
+        'action',
+        token.register === true ? 'register' : 'login'
+      ).replace('token', token.token)
+    );
   }
 );
 
