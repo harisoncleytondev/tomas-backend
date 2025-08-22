@@ -24,7 +24,7 @@ router.get(
   }),
   async (req, res) => {
     const token = req.user;
-    const { email } = decode(token);
+    const { email } = decode(token.token);
     const user = User.findOne({ where: { email: email } });
 
     await insertLog(user.user_id, 'login_google', req);
