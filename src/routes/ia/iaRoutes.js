@@ -56,7 +56,7 @@ router.post(
   checkUserAcessDayMiddleware,
   async (req, res) => {
     const { history, systemPrompt, question, temperature } = req.body;
-    const model = 'meta-llama/llama-guard-4-12b';
+    const model = 'llama-3.1-8b-instant';
 
     try {
       const response = await fetch(
